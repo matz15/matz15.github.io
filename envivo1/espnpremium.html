@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//cdn.jsdelivr.net/npm/@clappr/player@0.8/dist/clappr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swarmcloud-hls@latest/dist/p2p-engine.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swarmcloud-hls@latest/dist/clappr-p2p-plugin.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/cssm.css">
+    <style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden}#player{position:absolute;top:0;left:0;width:100%;height:100%}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar]{height:5px!important}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar]:hover .bar-background[data-seekbar]{height:7px!important}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] .bar-fill-1[data-seekbar]{background-color:red!important}.media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar]{background-color:rgba(255,255,255,0.2)!important}body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden}#player{position:absolute;top:0;left:0;width:100%;height:100%}.sound-button{position:absolute;top:10px;right:10px;padding:10px 20px;background-color:#002cec;color:#fff;border:none;border-radius:5px;font-size:14px;cursor:pointer;transition:background-color .3s}.sound-button:hover{background-color:#001f4d}</style>
+</head>
+<body>
+<div id="player"></div>
+<script>
+
+var token = '3419660a378b0d86038b7edcd6418c0efbcdcec9-5f1cc456e26e4f5e39f147d4f432f81d-1746930820-1746920020'
+
+var playbackURL = "https://cdn12.vivozytv.com/hotflix/espnpremium/index.m3u8?token="+token+"&remote=170.245.171.134";
+var player;
+var p2pConfig = {
+    trackerZone: 'us',
+    sourceUrl: playbackURL
+};
+P2PEngineHls.tryRegisterServiceWorker(p2pConfig).then(() => {
+    player = new Clappr.Player({
+        source: playbackURL,
+        parentId: "#player",
+        poster: '',
+        width: '100%',
+        height: '100%',
+        autoPlay: false,
+        playsinline: true, 
+        mute: false,
+        plugins: [SwarmCloudClapprPlugin],
+        playback: {
+            hlsjsConfig: {
+                maxBufferSize: 0,
+                maxBufferLength: 12,
+                liveSyncDurationCount: 3,
+                p2pConfig: p2pConfig
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
